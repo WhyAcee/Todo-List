@@ -19,6 +19,7 @@ body {
     display: flex;
     background-color: #333;
     color: #fff;
+    min-width: 300px;
 }
 
 .header h1 {
@@ -30,6 +31,58 @@ body {
 .nav {
     grid-row: 2/3;
     background-color: #fff;
+    padding: 10px;
+}
+
+.nav h1 {
+    padding: 5px 0px;
+    border-bottom: 3px solid #333;
+}
+
+.home-buttons button {
+    display: block;
+    border: none;
+    background-color: #fff;
+    width: 100%;
+    min-width: 205px;
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+}
+.home-buttons button:hover, .project-button:hover  {
+    color: white;
+    background-color: #333;
+}
+
+.project-button {
+    display: block;
+    border: none;
+    background-color: #fff;
+    width: 100%;
+    min-width: 205px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+#add-project-btn {
+    width: 100%;
+    font-size: 1.5rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+#add-project-btn:hover {
+    background-color: #333;
+    color: white;
 }
 
 /* CONTENT----------------------------------------------------------- */
