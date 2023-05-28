@@ -5,6 +5,7 @@
     font-family: 'Monomaniac One', sans-serif;
 }
 
+
 body {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -51,7 +52,7 @@ body {
     align-items: center;
     padding: 10px 10px;
 }
-.home-buttons button:hover, .project-button:hover  {
+.home-buttons button:hover, .project-button:hover {
     color: white;
     background-color: #333;
 }
@@ -68,6 +69,16 @@ body {
     align-items: center;
     padding: 5px 10px;
 }
+
+#project-delete-btn {
+    visibility: hidden;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.project-button:hover #project-delete-btn {
+    visibility: visible;
+} 
 
 #add-project-btn {
     width: 100%;

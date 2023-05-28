@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monomaniac+One&family=Roboto+Flex:wght@600&display=swap" rel="stylesheet">
-
+    <link rel="shortcut icon" type="x-icon" href="/src/imgs/tabicon.png">
 </head>
 <body>
     <div class="header">
@@ -19,13 +19,13 @@
     <div class="nav">
         <div class="home-buttons">
             <h1>Home</h1>
-            <button>
+            <button id="inbox">
                 <span class="material-symbols-outlined" style="font-size: 2.5rem;">inbox</span>
                 Inbox</button>
-            <button>
+            <button id="today">
                 <span class="material-symbols-outlined" style="font-size: 2.5rem;">today</span>
                 Today</button>
-            <button>
+            <button id="this-week">
                 <span class="material-symbols-outlined" style="font-size: 2.5rem;">calendar_month</span>
                 This week</button>
         </div>
@@ -34,10 +34,14 @@
             <div class="projects-list">
                 <button class="project-button"> 
                     <span class="material-symbols-outlined" style="font-size: 2rem;">summarize</span>
-                    Garbage work</button>
+                    <div class="project-name">Garbage work</div>
+                    <span id="project-delete-btn" class="material-symbols-outlined" style="font-size: 2rem;">close</span>
+                </button>
                     <button class="project-button">
                         <span class="material-symbols-outlined" style="font-size: 2rem;">summarize</span>
-                        Lawn</button>
+                        <div class="project-name">Lawn</div>
+                        <span id="project-delete-btn" class="material-symbols-outlined" style="font-size: 2rem;">close</span>
+                    </button>
             </div>
             <button id="add-project-btn">
                 <span class="material-symbols-outlined" style="font-size: 2rem;">add</span>
