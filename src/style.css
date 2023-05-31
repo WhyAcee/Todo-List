@@ -101,4 +101,49 @@ body {
 .content {
     grid-area: 2/2/3/3;
     background-color: #ddd;
+    padding: 25px 100px;
+}
+
+#content-title {
+    font-size: 2.5rem;
+}
+
+.task-item:nth-child(even) {
+    background-color: white;
+}
+
+.task-item {
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 10px;
+}
+
+.task {
+    margin-right: auto;
+}
+
+.add-task-btn {
+    margin-top: 10px;
+    width: 100%;
+    font-size: 1.5rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #ddd;
+    border-radius: 20px;
+}
+
+.add-task-btn:hover {
+    background-color: #333;
+    color: white;
+}
+
+.input-due-date {
+    border: none;
+    background-color: inherit;
+    font-size: 1.2rem;
 }
