@@ -33,6 +33,7 @@ body {
     grid-row: 2/3;
     background-color: #fff;
     padding: 10px;
+    min-width: 300px;
 }
 
 .nav h1 {
@@ -45,7 +46,6 @@ body {
     border: none;
     background-color: #fff;
     width: 100%;
-    min-width: 205px;
     font-size: 2rem;
     cursor: pointer;
     display: flex;
