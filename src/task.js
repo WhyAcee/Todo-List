@@ -3,10 +3,15 @@ export default class Task {
         this.container = document.createElement('div')
         this.container.classList.add("task-item")
 
+        this.complete = document.createElement('span')
+        this.complete.classList.add('material-symbols-outlined')
+        this.complete.classList.add('complete-task-btn')
+        this.complete.textContent = 'radio_button_unchecked'
+
         this.task = document.createElement('div')
         this.task.classList.add("task")
         this.task.textContent = name
-        
+
         this.priority = document.createElement('div')
         this.priority.classList.add('priority')
         this.priority.textContent = priority
@@ -15,6 +20,7 @@ export default class Task {
         this.dueDate.type = "date"
         this.dueDate.classList.add('input-due-date')
 
+        this.container.appendChild(this.complete)
         this.container.appendChild(this.task)
         this.container.appendChild(this.priority)
         this.container.appendChild(this.dueDate)
@@ -47,5 +53,9 @@ export default class Task {
 
     getPriority() {
         return this.priority.textContent
+    }
+
+    completeTask(container) {
+        container.removeChild(this.container)
     }
 };

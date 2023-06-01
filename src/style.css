@@ -118,6 +118,11 @@ body {
     justify-content: flex-end;
     gap: 20px;
     padding: 10px;
+    align-items: center;
+}
+
+.complete-task-btn {
+    cursor: pointer;
 }
 
 .task {
@@ -146,4 +151,37 @@ body {
     border: none;
     background-color: inherit;
     font-size: 1.2rem;
+}
+
+.task-popup {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 5px;
+    column-gap: 5px;
+}
+
+.task-popup input {
+    width: 100%;
+    grid-column: 1/3;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.task-popup button {
+    padding: 5px;
+    font-size: 1.2rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: white;
+}
+
+.task-popup button:nth-child(2) {
+    background-color: green;
+}
+
+.task-popup button:nth-child(3) {
+    background-color: red;
 }

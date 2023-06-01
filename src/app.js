@@ -27,11 +27,11 @@ function addTaskEvent() {
 function createTaskElements() {
     addTaskButton.style.display = 'none'
     taskContainer.classList.add('task-popup')
-    taskContainer.style.display = 'flex';
+    taskContainer.style.display = 'grid';
     textBox.type = 'text'
     textBox.placeholder = 'add task'
-    addBtn.textContent = 'add'
-    closeBtn.textContent = 'close'
+    addBtn.textContent = 'Add'
+    closeBtn.textContent = 'Close'
     
     content.appendChild(taskContainer)
     taskContainer.appendChild(textBox)
@@ -44,14 +44,27 @@ closeBtn.addEventListener('click', () => {
 })
 
 addBtn.addEventListener('click', () => {
-    addTaskEvent()
-    console.log("SADGE")
+     if (textBox.value === '') {
+        alert('Task can not be empty')
+    } else {
+        addTaskEvent()
+     }
 })
+
+//Remove task items from task list
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('complete-task-btn')) {
+    console.log('Task completed');
+    const taskItem = event.target.parentElement;
+    taskItem.remove();
+  }
+});
 
 addTaskButton.addEventListener('click', () => {
     console.log('Added task')
     createTaskElements()
 })
+
 
 /* export default function CreateTaskEvent(){ 
     addTaskButton.addEventListener('click', () => {
