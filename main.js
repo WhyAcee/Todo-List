@@ -110,13 +110,43 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 
 /***/ }),
 
+/***/ "./src/app.js":
+/*!********************!*\
+  !*** ./src/app.js ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ \"./src/project.js\");\n/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./task */ \"./src/task.js\");\n\n\n\nconst addTaskButton = document.querySelector('.add-task-btn');\nlet content = document.querySelector('.content')\nconst taskContainer = document.createElement('div')\nconst textBox = document.createElement('input')\nconst addBtn = document.createElement('button')\nconst closeBtn = document.createElement('button')\nconst taskList = document.querySelector('.task-list')\n   \n\nfunction closeTaskEvent() {\n    textBox.value = \"\"\n    taskContainer.style.display = 'none';\n    addTaskButton.style.display = 'flex'\n}\n\nfunction addTaskEvent() {\n    const newTask = new _task__WEBPACK_IMPORTED_MODULE_1__[\"default\"]() \n    newTask.setName(textBox.value)\n    newTask.setPriority(\"High Priority\")\n    newTask.setParent(taskList)\n    closeTaskEvent(taskContainer)\n}\n\nfunction createTaskElements() {\n    addTaskButton.style.display = 'none'\n    taskContainer.classList.add('task-popup')\n    taskContainer.style.display = 'flex';\n    textBox.type = 'text'\n    textBox.placeholder = 'add task'\n    addBtn.textContent = 'add'\n    closeBtn.textContent = 'close'\n    \n    content.appendChild(taskContainer)\n    taskContainer.appendChild(textBox)\n    taskContainer.appendChild(addBtn)\n    taskContainer.appendChild(closeBtn)\n}\n\ncloseBtn.addEventListener('click', () => {\n    closeTaskEvent()\n})\n\naddBtn.addEventListener('click', () => {\n    addTaskEvent()\n    console.log(\"SADGE\")\n})\n\naddTaskButton.addEventListener('click', () => {\n    console.log('Added task')\n    createTaskElements()\n})\n\n/* export default function CreateTaskEvent(){ \n    addTaskButton.addEventListener('click', () => {\n        console.log('Added task')\n        createTaskElements()\n    })\n}\n */\n\n\n//# sourceURL=webpack://todo-list/./src/app.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n\n\nconsole.log('Hello World!')\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ \"./src/project.js\");\n/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./task */ \"./src/task.js\");\n/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app */ \"./src/app.js\");\n\n\n\n\n\n//CreateTaskEvent()\n\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/project.js":
+/*!************************!*\
+  !*** ./src/project.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Project)\n/* harmony export */ });\nclass Project{\n    constructor(name) {\n        this.name = name;\n        this.tasks = [];\n    }\n\n    setName(name) {\n        this.name = name\n    }\n\n    getName() {\n        return this.name\n    }\n\n    setTask(tasks) {\n        this.tasks = tasks\n    }\n\n    getTasks() {\n        return this.tasks\n    }\n\n    addTask(task) {\n        this.tasks.push(task)\n    }\n\n    removeTask(task) {\n        const index = this.tasks.indexOf(task)\n        if (index !== -1) {\n            this.tasks.splice(index, 1)\n        }\n    }\n}\n\n//# sourceURL=webpack://todo-list/./src/project.js?");
+
+/***/ }),
+
+/***/ "./src/task.js":
+/*!*********************!*\
+  !*** ./src/task.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Task)\n/* harmony export */ });\nclass Task {\n    constructor(name, priority, dueDate = 'No Date Added') {\n        this.container = document.createElement('div')\n        this.container.classList.add(\"task-item\")\n\n        this.task = document.createElement('div')\n        this.task.classList.add(\"task\")\n        this.task.textContent = name\n        \n        this.priority = document.createElement('div')\n        this.priority.classList.add('priority')\n        this.priority.textContent = priority\n\n        this.dueDate = document.createElement('input')\n        this.dueDate.type = \"date\"\n        this.dueDate.classList.add('input-due-date')\n\n        this.container.appendChild(this.task)\n        this.container.appendChild(this.priority)\n        this.container.appendChild(this.dueDate)\n        console.log(\"creating Task...\")\n    }\n\n    setParent(parent) {\n        parent.appendChild(this.container)\n    }\n\n    setName(name) {\n        this.task.textContent = name\n    }\n\n    getName() {\n        return this.task.textContent\n    }\n\n    setDate(dueDate) {\n        this.dueDate.textContent = dueDate\n    }\n\n    getDate() {\n        return this.dueDate.textContent\n    }\n\n    setPriority(priority) {\n        this.priority.textContent = priority\n    }\n\n    getPriority() {\n        return this.priority.textContent\n    }\n};\n\n//# sourceURL=webpack://todo-list/./src/task.js?");
 
 /***/ })
 
