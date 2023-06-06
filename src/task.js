@@ -7,6 +7,9 @@ export default class Task {
         this.complete.classList.add('material-symbols-outlined')
         this.complete.classList.add('complete-task-btn')
         this.complete.textContent = 'radio_button_unchecked'
+        this.complete.addEventListener('click', () => {
+            this.container.remove();
+        }) 
 
         this.task = document.createElement('div')
         this.task.classList.add("task")
@@ -17,7 +20,7 @@ export default class Task {
         this.priority.textContent = priority
 
         this.dueDate = document.createElement('input')
-        this.dueDate.type = "date"
+        this.dueDate.type = 'date'
         this.dueDate.classList.add('input-due-date')
 
         this.container.appendChild(this.complete)
@@ -53,9 +56,5 @@ export default class Task {
 
     getPriority() {
         return this.priority.textContent
-    }
-
-    completeTask(container) {
-        container.removeChild(this.container)
     }
 };

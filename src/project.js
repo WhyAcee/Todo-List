@@ -1,11 +1,42 @@
+import Task from "./task";
+
 export default class Project{
     constructor(name) {
-        this.name = name;
         this.tasks = [];
+
+        this.logo = document.createElement('span')
+        this.logo.classList.add('material-symbols-outlined')
+        this.logo.textContent = 'summarize'
+        this.logo.style.fontSize = '2rem'
+
+        this.container = document.createElement('button')
+        this.container.classList.add("project-button")
+
+        this.project = document.createElement('div')
+        this.project.classList.add("project-name")
+        this.project.textContent = name
+
+        this.complete = document.createElement('span')
+        this.complete.classList.add('material-symbols-outlined')
+        this.complete.classList.add('project-delete-btn')
+        this.complete.textContent = 'close'
+        this.complete.style.fontSize = '2rem'
+        this.complete.addEventListener('click', () => {
+            this.container.remove();
+        })
+
+        this.container.appendChild(this.logo)
+        this.container.appendChild(this.project)
+        this.container.appendChild(this.complete)
+        
     }
 
-    setName(name) {
-        this.name = name
+    setParent(parent) {
+        parent.appendChild(this.container)
+    }
+
+     setName(name) {
+        this.project.textContent = name
     }
 
     getName() {
