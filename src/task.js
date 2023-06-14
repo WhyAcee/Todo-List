@@ -1,3 +1,5 @@
+import Project from "./project"
+
 export default class Task {
     constructor(name, priority, dueDate = 'No Date Added') {
         this.container = document.createElement('div')
@@ -9,7 +11,7 @@ export default class Task {
         this.complete.textContent = 'radio_button_unchecked'
         this.complete.addEventListener('click', () => {
             this.container.remove();
-        }) 
+        })
 
         this.task = document.createElement('div')
         this.task.classList.add("task")

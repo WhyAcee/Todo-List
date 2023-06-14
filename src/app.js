@@ -1,23 +1,33 @@
 import Project from "./project";
 import Task from "./task";
+import projectManager from "./projectManager";
 
 const addTaskButton = document.querySelector('.add-task-btn');
 const addProjectButton = document.querySelector('#add-project-btn');
 let content = document.querySelector('.content')
+let contentTitle = document.querySelector('#content-title')
 let projects = document.querySelector('.projects')
-//Tasks
+
+// Tasks
 const taskContainer = document.createElement('div')
 const taskTextBox = document.createElement('input')
 const addTaskBtn = document.createElement('button')
 const closeTaskBtn = document.createElement('button')
 const taskList = document.querySelector('.task-list')
-//Projects
+
+// Projects
 const projectContainer = document.createElement('div')
 const projectTextBox = document.createElement('input')
 const addProjectBtn = document.createElement('button')
 const closeProjectBtn = document.createElement('button')
 const projectList = document.querySelector('.projects-list')
-   
+
+// Home buttons
+const inboxButton = document.querySelector('#inbox')
+
+// Default Project
+const InboxProject = new Project('Inbox')
+  
 // Close events
 function closeTaskEvent() {
     taskTextBox.value = ""
@@ -36,6 +46,8 @@ function addTaskEvent() {
     newTask.setName(taskTextBox.value)
     newTask.setPriority("High Priority")
     newTask.setParent(taskList)
+    InboxProject.addTask(newTask)
+    console.log(InboxProject)
     closeTaskEvent(taskContainer)
 }
 
@@ -75,6 +87,14 @@ function createProjectElements() {
     projectContainer.appendChild(projectTextBox)
     projectContainer.appendChild(addProjectBtn)
     projectContainer.appendChild(closeProjectBtn)
+}
+// stuck appending array elements to dom
+// deleting tasks from array
+
+function createInboxElements() {
+    taskList.textContent = ''
+    contentTitle.textContent = 'Inbox'
+
 }
 
 // Close/Add events
@@ -118,6 +138,10 @@ addTaskButton.addEventListener('click', () => {
 addProjectButton.addEventListener('click', () => {
     console.log('Added Project')
     createProjectElements()
+})
+
+inboxButton.addEventListener('click', () => {
+    createInboxElements()
 })
 
 

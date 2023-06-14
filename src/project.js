@@ -28,14 +28,14 @@ export default class Project{
         this.container.appendChild(this.logo)
         this.container.appendChild(this.project)
         this.container.appendChild(this.complete)
-        
+
     }
 
     setParent(parent) {
         parent.appendChild(this.container)
     }
 
-     setName(name) {
+    setName(name) {
         this.project.textContent = name
     }
 
