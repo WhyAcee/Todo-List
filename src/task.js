@@ -1,7 +1,8 @@
 import Project from "./project"
+import projectManager from "./projectManager"
 
 export default class Task {
-    constructor(name, priority, dueDate = 'No Date Added') {
+    constructor(name, priority, dueDate) {
         this.container = document.createElement('div')
         this.container.classList.add("task-item")
 
@@ -9,9 +10,6 @@ export default class Task {
         this.complete.classList.add('material-symbols-outlined')
         this.complete.classList.add('complete-task-btn')
         this.complete.textContent = 'radio_button_unchecked'
-        this.complete.addEventListener('click', () => {
-            this.container.remove();
-        })
 
         this.task = document.createElement('div')
         this.task.classList.add("task")
@@ -24,12 +22,17 @@ export default class Task {
         this.dueDate = document.createElement('input')
         this.dueDate.type = 'date'
         this.dueDate.classList.add('input-due-date')
+        this.dueDate.value = dueDate
 
         this.container.appendChild(this.complete)
         this.container.appendChild(this.task)
         this.container.appendChild(this.priority)
         this.container.appendChild(this.dueDate)
         console.log("creating Task...")
+    }
+
+    getContainer() {
+        return this.container
     }
 
     setParent(parent) {
@@ -58,5 +61,15 @@ export default class Task {
 
     getPriority() {
         return this.priority.textContent
+    }
+
+    setProjectOwner(parent, task) {
+        this.project = parent
+        this.task = task
+        this.complete.addEventListener('click', () =>{
+            console.log(this.task.getName())
+            this.project.removeTask(this.task)
+            this.container.remove()
+        })
     }
 };

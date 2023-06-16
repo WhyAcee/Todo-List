@@ -1,12 +1,12 @@
-import Project from "./project";
 import Task from "./task";
+import Project from "./project";
 import projectManager from "./projectManager";
 
 const addTaskButton = document.querySelector('.add-task-btn');
 const addProjectButton = document.querySelector('#add-project-btn');
 let content = document.querySelector('.content')
 let contentTitle = document.querySelector('#content-title')
-let projects = document.querySelector('.projects')
+let projectsSection = document.querySelector('.projects')
 
 // Tasks
 const taskContainer = document.createElement('div')
@@ -21,12 +21,27 @@ const projectTextBox = document.createElement('input')
 const addProjectBtn = document.createElement('button')
 const closeProjectBtn = document.createElement('button')
 const projectList = document.querySelector('.projects-list')
+const projects = new projectManager()
 
 // Home buttons
 const inboxButton = document.querySelector('#inbox')
 
 // Default Project
-const InboxProject = new Project('Inbox')
+const inboxProject = new Project()
+
+// Change tab events
+function changeToNewTab(tab) {
+    contentTitle.textContent = tab.getName()
+    projects.setIndex(tab)
+    projects.getIndex().createTaskElements(taskList)
+}
+
+function InboxTab() {
+    console.log(inboxProject.tasks)
+    contentTitle.textContent = 'Inbox'
+    taskList.textContent = ''
+    inboxProject.createTaskElements(taskList)
+}
   
 // Close events
 function closeTaskEvent() {
@@ -46,8 +61,13 @@ function addTaskEvent() {
     newTask.setName(taskTextBox.value)
     newTask.setPriority("High Priority")
     newTask.setParent(taskList)
-    InboxProject.addTask(newTask)
-    console.log(InboxProject)
+    projects.getIndex().addTask(newTask)
+    newTask.setProjectOwner(projects.getIndex(), newTask)
+    inboxProject.addTask(newTask)
+    newTask.complete.addEventListener('click', () => {
+        inboxProject.removeTask(newTask)
+        inboxProject.container.remove()
+    })
     closeTaskEvent(taskContainer)
 }
 
@@ -55,6 +75,9 @@ function addProjectEvent() {
     const newProject = new Project() 
     newProject.setName(projectTextBox.value)
     newProject.setParent(projectList)
+    newProject.getContainer().addEventListener('click', () => {
+        changeToNewTab(newProject)
+    })
     closeProjectEvent(projectContainer)
 }
 
@@ -83,18 +106,10 @@ function createProjectElements() {
     addProjectBtn.textContent = 'Add'
     closeProjectBtn.textContent = 'Close'
     
-    projects.appendChild(projectContainer)
+    projectsSection.appendChild(projectContainer)
     projectContainer.appendChild(projectTextBox)
     projectContainer.appendChild(addProjectBtn)
     projectContainer.appendChild(closeProjectBtn)
-}
-// stuck appending array elements to dom
-// deleting tasks from array
-
-function createInboxElements() {
-    taskList.textContent = ''
-    contentTitle.textContent = 'Inbox'
-
 }
 
 // Close/Add events
@@ -126,7 +141,8 @@ addProjectBtn.addEventListener('click', () => {
   if (event.target.classList.contains('complete-task-btn')) {
     console.log('Task completed');
     const taskItem = event.target.parentElement;
-    taskItem.remove();
+      taskItem.remove();
+      inboxProject.removeTask()
   }
 }); */
 
@@ -141,8 +157,10 @@ addProjectButton.addEventListener('click', () => {
 })
 
 inboxButton.addEventListener('click', () => {
-    createInboxElements()
+    InboxTab()
 })
+
+InboxTab()
 
 
 /* export default function CreateTaskEvent(){ 
@@ -152,3 +170,5 @@ inboxButton.addEventListener('click', () => {
     })
 }
  */
+
+export { inboxProject }

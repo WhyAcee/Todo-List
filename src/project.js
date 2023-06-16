@@ -31,6 +31,10 @@ export default class Project{
 
     }
 
+    getContainer() {
+        return this.container
+    }
+
     setParent(parent) {
         parent.appendChild(this.container)
     }
@@ -40,7 +44,7 @@ export default class Project{
     }
 
     getName() {
-        return this.name
+        return this.project.textContent
     }
 
     setTask(tasks) {
@@ -60,5 +64,14 @@ export default class Project{
         if (index !== -1) {
             this.tasks.splice(index, 1)
         }
+    }
+
+    createTaskElements(list) {
+        if (this.tasks != null) {
+            list.textContent = ''
+            for (let task in this.tasks) {
+                list.appendChild(this.tasks[task].getContainer())
+            }
+        }     
     }
 }

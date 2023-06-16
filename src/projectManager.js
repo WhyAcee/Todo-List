@@ -1,3 +1,5 @@
+import Project from "./project"
+
 export default class projectManager {
     constructor() {
         this.list = []
