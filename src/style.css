@@ -119,6 +119,7 @@ body {
     border: 1px solid black;
     border-radius: 5px;
     color: white;
+    cursor: pointer;
 }
 
 .project-popup button:nth-child(2) {
@@ -217,4 +218,9 @@ body {
 
 .task-popup button:nth-child(3) {
     background-color: red;
+}
+
+.task-item select {
+    background-color: inherit;
+    font-size: 1rem;
 }

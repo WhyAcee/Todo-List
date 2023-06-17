@@ -20,5 +20,8 @@ export default class projectManager {
 
     removeProject() {
         const index = this.list.indexOf(project)
+        if(index !== -1) {
+            this.list.splice(index,1)
+        }
     }
 }

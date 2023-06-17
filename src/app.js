@@ -59,7 +59,6 @@ function closeProjectEvent() {
 function addTaskEvent() {
     const newTask = new Task() 
     newTask.setName(taskTextBox.value)
-    newTask.setPriority("High Priority")
     newTask.setParent(taskList)
     projects.getIndex().addTask(newTask)
     newTask.setProjectOwner(projects.getIndex(), newTask)

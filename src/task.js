@@ -15,9 +15,20 @@ export default class Task {
         this.task.classList.add("task")
         this.task.textContent = name
 
-        this.priority = document.createElement('div')
+        this.priority = document.createElement('select') //div
         this.priority.classList.add('priority')
         this.priority.textContent = priority
+
+        this.lowPriority = document.createElement("option")
+        this.mediumPriority = document.createElement("option")
+        this.highPriority = document.createElement("option")
+
+        this.lowPriority.value = 'Low Priority'
+        this.lowPriority.text = 'Low Priority'
+        this.mediumPriority.value = 'Medium priority'
+        this.mediumPriority.text = 'Medium Priority'
+        this.highPriority.value = 'High priority'
+        this.highPriority.text = 'High Priority'
 
         this.dueDate = document.createElement('input')
         this.dueDate.type = 'date'
@@ -28,6 +39,9 @@ export default class Task {
         this.container.appendChild(this.task)
         this.container.appendChild(this.priority)
         this.container.appendChild(this.dueDate)
+        this.priority.appendChild(this.lowPriority)
+        this.priority.appendChild(this.mediumPriority)
+        this.priority.appendChild(this.highPriority)
         console.log("creating Task...")
     }
 
@@ -55,12 +69,8 @@ export default class Task {
         return this.dueDate.textContent
     }
 
-    setPriority(priority) {
-        this.priority.textContent = priority
-    }
-
     getPriority() {
-        return this.priority.textContent
+        return this.priority.value
     }
 
     setProjectOwner(parent, task) {

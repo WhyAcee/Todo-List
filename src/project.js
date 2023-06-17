@@ -1,4 +1,5 @@
 import Task from "./task";
+import projectManager from "./projectManager";
 
 export default class Project{
     constructor(name) {
