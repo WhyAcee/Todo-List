@@ -1,5 +1,6 @@
 import Project from "./project"
 import projectManager from "./projectManager"
+import { compareAsc, getDate, getMonth, getYear} from "date-fns"
 
 export default class Task {
     constructor(name, priority, dueDate) {
@@ -42,7 +43,7 @@ export default class Task {
         this.priority.appendChild(this.lowPriority)
         this.priority.appendChild(this.mediumPriority)
         this.priority.appendChild(this.highPriority)
-        console.log("creating Task...")
+        console.log("created Task...")
     }
 
     getContainer() {
@@ -61,16 +62,12 @@ export default class Task {
         return this.task.textContent
     }
 
-    setDate(dueDate) {
-        this.dueDate.textContent = dueDate
-    }
-
-    getDate() {
-        return this.dueDate.textContent
-    }
-
     getPriority() {
         return this.priority.value
+    }
+
+    getDateValue() {
+        return this.dueDate.value
     }
 
     setProjectOwner(parent, task) {

@@ -22,9 +22,6 @@ export default class Project{
         this.complete.classList.add('project-delete-btn')
         this.complete.textContent = 'close'
         this.complete.style.fontSize = '2rem'
-        this.complete.addEventListener('click', () => {
-            this.container.remove();
-        })
 
         this.container.appendChild(this.logo)
         this.container.appendChild(this.project)
