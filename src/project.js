@@ -72,4 +72,16 @@ export default class Project{
             }
         }     
     }
+
+    deleteTaskElements(weekly, daily) {
+        this.week = weekly
+        this.today = daily
+
+        if (this.tasks != null) {
+            for (let task in this.tasks) {
+                this.week.removeTask(this.tasks[task])
+                this.today.removeTask(this.tasks[task])
+            }
+        }
+    }
 }

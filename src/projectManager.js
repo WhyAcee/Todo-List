@@ -15,13 +15,14 @@ export default class projectManager {
     }
 
     addProject(project) {
-        this.list.push()
+        this.list.push(project)
     }
 
-    removeProject() {
+    removeProject(project) {
         const index = this.list.indexOf(project)
         if(index !== -1) {
             this.list.splice(index,1)
         }
     }
 }
+

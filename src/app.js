@@ -14,6 +14,7 @@ const taskTextBox = document.createElement('input')
 const addTaskBtn = document.createElement('button')
 const closeTaskBtn = document.createElement('button')
 const taskList = document.querySelector('.task-list')
+const dueDateInput = document.querySelector('.input-due-date');
 
 // Projects
 const projectContainer = document.createElement('div')
@@ -25,9 +26,23 @@ const projects = new projectManager()
 
 // Home buttons
 const inboxButton = document.querySelector('#inbox')
+const todayButton = document.querySelector('#today')
+const thisWeekButton = document.querySelector('#this-week')
 
-// Default Project
+// Default Projects
 const inboxProject = new Project()
+const todayProject = new Project()
+const thisWeekProject = new Project()
+
+inboxProject.setName('Inbox')
+todayProject.setName('Today')
+thisWeekProject.setName('This Week')
+
+projects.addProject(inboxProject)
+projects.addProject(todayProject)
+projects.addProject(thisWeekProject)
+console.log(projects.list)
+
 
 // Change tab events
 function changeToNewTab(tab) {
@@ -35,14 +50,7 @@ function changeToNewTab(tab) {
     projects.setIndex(tab)
     projects.getIndex().createTaskElements(taskList)
 }
-
-function InboxTab() {
-    console.log(inboxProject.tasks)
-    contentTitle.textContent = 'Inbox'
-    taskList.textContent = ''
-    inboxProject.createTaskElements(taskList)
-}
-  
+ 
 // Close events
 function closeTaskEvent() {
     taskTextBox.value = ""
@@ -60,13 +68,9 @@ function addTaskEvent() {
     const newTask = new Task() 
     newTask.setName(taskTextBox.value)
     newTask.setParent(taskList)
+    newTask.checkDate(thisWeekProject, todayProject, newTask)
     projects.getIndex().addTask(newTask)
     newTask.setProjectOwner(projects.getIndex(), newTask)
-    inboxProject.addTask(newTask)
-    newTask.complete.addEventListener('click', () => {
-        inboxProject.removeTask(newTask)
-        inboxProject.container.remove()
-    })
     closeTaskEvent(taskContainer)
 }
 
@@ -74,8 +78,18 @@ function addProjectEvent() {
     const newProject = new Project() 
     newProject.setName(projectTextBox.value)
     newProject.setParent(projectList)
-    newProject.getContainer().addEventListener('click', () => {
+    projects.addProject(newProject)
+
+    newProject.getContainer().addEventListener('mouseup', () => {
         changeToNewTab(newProject)
+        addTaskButton.style.display = 'flex'
+    })
+
+    newProject.complete.addEventListener('click', () => {
+        newProject.deleteTaskElements(thisWeekProject, todayProject)
+        projects.removeProject(newProject)
+        newProject.container.remove()
+        changeToNewTab(inboxProject)
     })
     closeProjectEvent(projectContainer)
 }
@@ -135,39 +149,44 @@ addProjectBtn.addEventListener('click', () => {
         addProjectEvent()
      }
 })
-//Remove task items from task list
-/* document.addEventListener('click', (event) => {
-  if (event.target.classList.contains('complete-task-btn')) {
-    console.log('Task completed');
-    const taskItem = event.target.parentElement;
-      taskItem.remove();
-      inboxProject.removeTask()
-  }
-}); */
 
 addTaskButton.addEventListener('click', () => {
-    console.log('Added task')
+    console.log('Adding task')
+    closeProjectEvent()
     createTaskElements()
 })
 
 addProjectButton.addEventListener('click', () => {
-    console.log('Added Project')
+    console.log('Adding Project')
+    closeTaskEvent()
     createProjectElements()
 })
 
 inboxButton.addEventListener('click', () => {
-    InboxTab()
+    console.log(inboxProject.tasks)
+    changeToNewTab(inboxProject)
+    addTaskButton.style.display = 'flex'
 })
 
-InboxTab()
+todayButton.addEventListener('click', () => {
+    changeToNewTab(todayProject)
+    closeTaskEvent()
+    addTaskButton.style.display = 'none'
+})
+
+thisWeekButton.addEventListener('click', () => {
+    changeToNewTab(thisWeekProject)
+    closeTaskEvent()
+    addTaskButton.style.display = 'none'
+})
+
+changeToNewTab(inboxProject)
+
+const newDate = new Date("2012-02-03")
+const otherDate = new Date("2012", "01", "02")
+const anotherDate = new Date("2012, 02, 02")
+console.log(newDate)
+console.log(otherDate)
+console.log(anotherDate)
 
 
-/* export default function CreateTaskEvent(){ 
-    addTaskButton.addEventListener('click', () => {
-        console.log('Added task')
-        createTaskElements()
-    })
-}
- */
-
-export { inboxProject }

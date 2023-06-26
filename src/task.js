@@ -1,6 +1,6 @@
 import Project from "./project"
 import projectManager from "./projectManager"
-import { compareAsc, getDate, getMonth, getYear} from "date-fns"
+import {getDate, getMonth, getYear, isThisWeek, startOfToday} from "date-fns"
 
 export default class Task {
     constructor(name, priority, dueDate) {
@@ -77,6 +77,57 @@ export default class Task {
             console.log(this.task.getName())
             this.project.removeTask(this.task)
             this.container.remove()
+        })
+    }
+    
+    makeDate(year, month, day) {
+        const yyyy = String(year)
+        const mm = (month < 10 ? '0' : '') + String(month + 1)
+        const dd = (day < 10 ? '0' : '') + String(day)
+        const dateString = yyyy + '-' + mm + '-' + dd
+        return dateString
+    }
+
+    getCurrentDate() {
+        return new Date(this.getDateValue())
+    }
+
+    getTodaysDate() {
+        const todaysDate = startOfToday()
+        return this.makeDate(getYear(todaysDate), getMonth(todaysDate), getDate(todaysDate))
+    }
+
+    checkDate(weekly, daily, item) {
+        this.week = weekly
+        this.today = daily
+        this.taskDate = item
+
+        this.dueDate.addEventListener('change', () => {
+            if (this.dueDate.value === this.getTodaysDate()) {
+                this.today.addTask(this.taskDate) 
+                this.dueDate.addEventListener('change', () => {
+                    if (this.dueDate.value !== this.getTodaysDate()) {
+                        this.today.removeTask(this.taskDate)  
+                    }   
+                })
+                this.complete.addEventListener('click', () =>{
+                    this.today.removeTask(this.taskDate)
+                    this.container.remove()
+                })
+            }
+            
+            if(isThisWeek(this.getCurrentDate()) == true){
+                this.week.addTask(this.taskDate)
+                this.dueDate.addEventListener('change', () => {
+                    if (isThisWeek(this.getCurrentDate()) == false) {
+                        this.week.removeTask(this.taskDate) 
+                    } 
+                })
+                this.complete.addEventListener('click', () =>{
+                    this.week.removeTask(this.taskDate)
+                    this.container.remove()
+                })
+            }
         })
     }
 };
