@@ -85,11 +85,10 @@ function loadTasksAndProjects() {
             newTask.setName(task.title);
             newTask.setParent(taskList);
             newTask.checkDate(thisWeekProject, todayProject, newTask);
-
-            projects.getIndex().addTask(newTask);
             newTask.setProjectOwner(projects.getIndex(), newTask, todoStorage);
-
-            //newTask.createTaskElement(taskList)
+            
+            projects.getIndex().addTask(newTask);
+            
         }
     });
 }

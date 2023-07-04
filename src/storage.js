@@ -26,13 +26,18 @@ export default class Storage {
 
     deleteProject(projectName) {
         // Delete project from storage.projects
+        const deletedProject = this.storage.projects.find(
+            (project) => project.title === projectName
+        );
         this.storage.projects = this.storage.projects.filter(
             (project) => project.title !== projectName
         )
+
+        console.log(deletedProject)
         
         // Delete project from storage.tasks
         this.storage.tasks = this.storage.tasks.filter(
-            (task) => task.title !== projectName
+            (task) => task.projectId !== deletedProject.title
         );
 
         this.saveTodoList();
