@@ -24,5 +24,13 @@ export default class projectManager {
             this.list.splice(index,1)
         }
     }
+
+    loadProjects(projectsData) {
+        this.list = projectsData.map(projectData => {
+            const project = new Project();
+            project.setName(projectData.title)
+            return project
+        })
+    }
 }
 

@@ -1,8 +1,9 @@
 import Task from "./task";
 import projectManager from "./projectManager";
 
-export default class Project{
+export default class Project {
     constructor(name) {
+        this.title = name
         this.tasks = [];
 
         this.logo = document.createElement('span')
@@ -64,7 +65,7 @@ export default class Project{
         }
     }
 
-    createTaskElements(list) {
+    createTaskElement(list) {
         if (this.tasks != null) {
             list.textContent = ''
             for (let task in this.tasks) {

@@ -3,10 +3,14 @@ import projectManager from "./projectManager"
 import {getDate, getMonth, getYear, isThisWeek, startOfToday} from "date-fns"
 
 export default class Task {
-    constructor(name, priority, dueDate) {
+    constructor(name, priorityValue, dueDateValue) {
+        this.title = name
+        this.priorityValue = priorityValue
+        this.dueDateValue = dueDateValue
+
         this.container = document.createElement('div')
         this.container.classList.add("task-item")
-
+        
         this.complete = document.createElement('span')
         this.complete.classList.add('material-symbols-outlined')
         this.complete.classList.add('complete-task-btn')
@@ -16,9 +20,12 @@ export default class Task {
         this.task.classList.add("task")
         this.task.textContent = name
 
-        this.priority = document.createElement('select') //div
+        this.priority = document.createElement('select')
         this.priority.classList.add('priority')
-        this.priority.textContent = priority
+        this.priority.value = priorityValue
+        this.priority.addEventListener('change', () => {
+            this.saveToLocalStorage()
+        })
 
         this.lowPriority = document.createElement("option")
         this.mediumPriority = document.createElement("option")
@@ -30,11 +37,12 @@ export default class Task {
         this.mediumPriority.text = 'Medium Priority'
         this.highPriority.value = 'High priority'
         this.highPriority.text = 'High Priority'
+        
 
         this.dueDate = document.createElement('input')
         this.dueDate.type = 'date'
         this.dueDate.classList.add('input-due-date')
-        this.dueDate.value = dueDate
+        this.dueDate.value = dueDateValue
 
         this.container.appendChild(this.complete)
         this.container.appendChild(this.task)
@@ -46,6 +54,26 @@ export default class Task {
         console.log("created Task...")
     }
 
+    saveToLocalStorage() {
+        const taskData = {
+            name: this.title,
+            priorityValue: this.getPriority(),
+            dueDateValue: this.getDateValue()
+        };
+        localStorage.setItem(this.title, JSON.stringify(taskData))
+    }
+
+    static loadFromLocalStorage(name) {
+        const taskData = localStorage.getItem(name);
+        if (taskData) {
+            const { name, priorityValue, dueDateValue } = JSON.parse(taskData)
+            const task = new Task(name, priorityValue, dueDateValue)
+            task.setPriority(priorityValue)
+            return task
+        }
+        return null
+    }
+
     getContainer() {
         return this.container
     }
@@ -55,28 +83,40 @@ export default class Task {
     }
 
     setName(name) {
+        this.title = name
         this.task.textContent = name
     }
 
     getName() {
-        return this.task.textContent
+        return this.title
+    }
+
+    setPriority(priority) {
+        this.priority.value = priority;
     }
 
     getPriority() {
         return this.priority.value
     }
 
+    setDueDate(dueDate) {
+        this.dueDateValue = dueDate;
+        console.log(dueDate)
+    }
+
     getDateValue() {
         return this.dueDate.value
     }
 
-    setProjectOwner(parent, task) {
+    setProjectOwner(parent, task, storage) {
         this.project = parent
         this.task = task
+        this.storage = storage
         this.complete.addEventListener('click', () =>{
             console.log(this.task.getName())
             this.project.removeTask(this.task)
             this.container.remove()
+            this.storage.deleteTask(this.task.getName())
         })
     }
     
@@ -103,6 +143,8 @@ export default class Task {
         this.taskDate = item
 
         this.dueDate.addEventListener('change', () => {
+            this.saveToLocalStorage()
+            this.setDueDate(this.dueDate.value)
             if (this.dueDate.value === this.getTodaysDate()) {
                 this.today.addTask(this.taskDate) 
                 this.dueDate.addEventListener('change', () => {
