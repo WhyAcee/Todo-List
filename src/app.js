@@ -50,7 +50,10 @@ console.log(projects.list)
 function changeToNewTab(tab) {
     contentTitle.textContent = tab.getName()
     projects.setIndex(tab)
+
+    taskList.textContent = ''
     projects.getIndex().createTaskElement(taskList)
+    loadTasks()
 }
 
 // Load tasks and projects from storage
@@ -75,7 +78,7 @@ function loadTasksAndProjects() {
             changeToNewTab(inboxProject);
 
             todoStorage.deleteProject(newProject.getName())
-         });
+        });  
     });
 
     const loadedTasks = todoStorage.getTasks(projects.getIndex().getName());
@@ -86,11 +89,28 @@ function loadTasksAndProjects() {
             newTask.setParent(taskList);
             newTask.checkDate(thisWeekProject, todayProject, newTask);
             newTask.setProjectOwner(projects.getIndex(), newTask, todoStorage);
-            
+
             projects.getIndex().addTask(newTask);
-            
+                
         }
     });
+}
+
+function loadTasks() {
+  const loadedTasks = todoStorage.getTasks(projects.getIndex().getName());
+  loadedTasks.forEach(task => {
+    const existingTask = projects.getIndex().getTasks().find(t => t.getName() === task.title);
+    if (!existingTask) {
+      const newTask = Task.loadFromLocalStorage(task.title);
+      if (newTask) {
+        newTask.setName(task.title);
+        newTask.setParent(taskList);
+        newTask.checkDate(thisWeekProject, todayProject, newTask);
+        newTask.setProjectOwner(projects.getIndex(), newTask, todoStorage);
+        projects.getIndex().addTask(newTask);
+      }
+    }
+  });
 }
  
 // Close events
@@ -145,7 +165,7 @@ function addProjectEvent() {
 }
 
 // Create elements
-function createTaskElements() {
+function createTaskDomElements() {
     addTaskButton.style.display = 'none'
     taskContainer.classList.add('task-popup')
     taskContainer.style.display = 'grid';
@@ -203,7 +223,7 @@ addProjectBtn.addEventListener('click', () => {
 addTaskButton.addEventListener('click', () => {
     console.log('Adding task')
     closeProjectEvent()
-    createTaskElements()
+    createTaskDomElements()
 })
 
 addProjectButton.addEventListener('click', () => {

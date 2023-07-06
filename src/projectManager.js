@@ -6,6 +6,10 @@ export default class projectManager {
         this.index = new Project()
     }
 
+    getProjects() {
+        return this.list
+    }
+
     getIndex() {
         return this.index
     }

@@ -78,6 +78,10 @@ export default class Task {
         return this.container
     }
 
+    createTaskElements(list) {
+        list.appendChild(this.getContainer());
+    }
+
     setParent(parent) {
         parent.appendChild(this.container)
     }
@@ -142,34 +146,29 @@ export default class Task {
         this.today = daily
         this.taskDate = item
 
-        this.dueDate.addEventListener('change', () => {
-            this.saveToLocalStorage()
-            this.setDueDate(this.dueDate.value)
-            if (this.dueDate.value === this.getTodaysDate()) {
-                this.today.addTask(this.taskDate) 
-                this.dueDate.addEventListener('change', () => {
-                    if (this.dueDate.value !== this.getTodaysDate()) {
-                        this.today.removeTask(this.taskDate)  
-                    }   
-                })
-                this.complete.addEventListener('click', () =>{
-                    this.today.removeTask(this.taskDate)
-                    this.container.remove()
-                })
+        const updateProjectAssignment = () => {
+            const currentDate = this.getCurrentDate();
+
+            if (this.dueDate.value === this.getTodaysDate() ) {
+            this.today.addTask(this.taskDate);
+            } else {
+            this.today.removeTask(this.taskDate);
             }
-            
-            if(isThisWeek(this.getCurrentDate()) == true){
-                this.week.addTask(this.taskDate)
-                this.dueDate.addEventListener('change', () => {
-                    if (isThisWeek(this.getCurrentDate()) == false) {
-                        this.week.removeTask(this.taskDate) 
-                    } 
-                })
-                this.complete.addEventListener('click', () =>{
-                    this.week.removeTask(this.taskDate)
-                    this.container.remove()
-                })
+
+            if (isThisWeek(this.getCurrentDate()) == true) {
+            this.week.addTask(this.taskDate);
+            } else {
+            this.week.removeTask(this.taskDate);
             }
-        })
+        };
+
+        this.dueDate.addEventListener("change", () => {
+            this.saveToLocalStorage();
+            this.setDueDate(this.dueDate.value);
+            updateProjectAssignment();
+         });
+
+        // Call the updateProjectAssignment function initially
+        updateProjectAssignment();
     }
 };
